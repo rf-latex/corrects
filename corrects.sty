@@ -1,0 +1,45 @@
+
+%%% CORRECTS.STY
+\typeout{Corrections style option for LaTeX, (c) Mike Piff, 07/22/92}
+
+\newif\ifcorrections \correctionsfalse
+\newif\ifrealpage \realpagetrue
+\def\correctionsonly{%
+   \correctionstrue \realpagefalse}
+\def\currentstate#1#2#3{%
+   \setcounter{#1}{#2}%
+   \addtocounter{#1}{-1}%
+   \csname #1\endcsname{#3}\mbox{}}%
+\def\startpage#1{\npage{#1}%
+   \resetcounters}
+\def\startpageflushleft#1{\npage{#1}%
+   \noindent\resetcounters}
+\newcommand{\resetcounters}{\ignorespaces}
+\def\npage#1{\clearpage
+   \global\realpagetrue
+   \setcounter{page}{#1}}
+\def\endpageflushright{%
+   {\parfillskip0pt\par\pagebreak}}
+\def\endpage{\pagebreak}
+\def\anotherpageflushleft{%
+   \global\realpagetrue\noindent}
+\def\anotherpage{\global\realpagetrue}
+\def\morefootnotetext#1{\@bsphack{%
+   \def\@makefntext##1{\noindent ##1}%
+   \footnotetext{#1}}\@esphack}
+\let\@@outputpage\@outputpage
+\def\@outputpage{%
+   \ifrealpage\@@outputpage
+   \else\global\@specialpagefalse
+   \let\firstmark\botmark\fi
+   \ifcorrections\global\realpagefalse\fi}
+\endinput
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Dr M J Piff                      %%  e-mail:
+%% Department of Pure Mathematics   %%
+%% University of Sheffield          %%  M.Piff@sheffield.ac.uk
+%% Hicks Building                   %%
+%% Hounsfield Road                  %%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SHEFFIELD S3 7RH                 %%  Telephone: SHEFFIELD (0742) 768555
+%% England                          %%             Ext. 4431
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
